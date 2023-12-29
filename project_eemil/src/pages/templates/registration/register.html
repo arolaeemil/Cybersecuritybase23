@@ -14,8 +14,8 @@
         <button type="submit">Register</button>
     </form>
     &nbsp
-    <form method="GET" action="{% url 'home' %}">
-    <!-- <form method="POST" action="{% url 'home' %}"> -->
+    <!-- <form method="GET" action="{% url 'home' %}"> -->
+    <form method="POST" action="{% url 'home' %}">
         {% csrf_token %}
         <button type="submit">Back</button>
     </form>
