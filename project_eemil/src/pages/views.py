@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.contrib.auth import update_session_auth_hash
 from django.views.decorators.csrf import csrf_protect
 
-
+#@csrf_protect
 @login_required
 def deleteTextView(request):
     target_id = request.POST.get('id')
@@ -18,6 +18,7 @@ def deleteTextView(request):
     target.delete()
     return redirect('home')
 
+#@csrf_protect
 @login_required
 def deleteMessageView(request):
     target_id = request.POST.get('id')
@@ -25,6 +26,7 @@ def deleteMessageView(request):
     target.delete()
     return redirect('home')
 
+#@csrf_protect
 @login_required
 def deleteTextView2(request):
     target_id = request.POST.get('id')
@@ -32,6 +34,7 @@ def deleteTextView2(request):
     target.delete()
     return redirect('submit_text')
 
+#@csrf_protect
 @login_required
 def deleteMessageView2(request):
     target_id = request.POST.get('id')
@@ -110,7 +113,7 @@ def send_message_view(request):
     return render(request, 'pages/sendmessage.html', {'form': form, 'message_items': message_items, 'all_users': all_users})
 
 #@admin_required
-#@login_required
+@login_required
 #@csrf_protect
 def show_users_view(request):
     username = request.user.username
@@ -118,7 +121,7 @@ def show_users_view(request):
     return render(request, 'pages/users.html', {'all_users': all_users})
 
 #@admin_required
-#@login_required
+@login_required
 #@csrf_protect
 def delete_user_view(request):
     username = request.user.username
