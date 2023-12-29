@@ -1,0 +1,16 @@
+<h2>Welcome!</h2>
+<h2>Login with existing account</h2>
+<!-- <form method="GET"> -->
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Login</button>
+</form>
+
+<h2>Create an account</h2>
+<!-- <form method="GET" action="{% url 'register' %}"> -->
+<form method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
+    <button type="submit">Register</button>
+</form>
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Submit Text</title>
+    </head>
+    <body>
+        <h2>Send messages to text wall</h2>
+        
+        <!-- <form method="GET" action="{% url 'submit_text' %}"> -->
+        <form method="POST" action="{% url 'submit_text' %}">
+            {% csrf_token %}
+            
+            <label for="text_data">Text:</label>
+            <input type="text" id="text_data" name="text_data" required>
+
+            <button type="submit">Submit</button>
+        </form>
+        &nbsp
+        <!-- <form method="GET" action="{% url 'home' %}">    -->
+        <form method="POST" action="{% url 'home' %}">   
+            {% csrf_token %}
+            <button type="submit">Back</button>
+        </form>
+
+        <!-- Display retrieved text from the database -->
+        <h2>Text wall</h2>
+        <table>
+            {% for item in text_items %}
+            <tr>
+                <td>{{ item.username }}: {{ item.text_data }}</td>
+                <td>
+                    <!-- <form method="GET" action="{% url 'delete_text2' %}"> -->
+                    <form method="POST" action="{% url 'delete_text2' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ item.id }}" />
+                        
+                        {% if current_user.username == item.username %}
+                            <button class="deleteButton" type="submit">Delete Text</button>
+                        {% endif %}
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

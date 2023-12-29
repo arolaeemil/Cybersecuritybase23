@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Submit Text</title>
+    </head>
+        <h2>Users</h2>
+        <table>
+        {% for item in all_users %}
+            <tr>
+                <td>{{ item.username }}</td>
+                <td>
+                <!-- <form method="GET" action="{% url 'delete_user' %}"> -->
+                <form method="POST" action="{% url 'delete_user' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ item.id }}" />
+                    <button type="submit">Delete user</button>
+                </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+        &nbsp
+        <!-- <form method="GET" action="{% url 'home' %}"> -->
+        <form method="POST" action="{% url 'home' %}">   
+            {% csrf_token %}
+            <button type="submit">Back</button>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Retrieved messaged from specified sender</title>
+    </head>
+    <body>
+        <!--<form method="GET" action="{% url 'get_messages' %}"> -->
+        <form method="POST" action="{% url 'get_messages' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+        &nbsp
+        <table>
+            {% for item in filtered_messages %}
+                <tr>
+                    <!--
+                    <td>{{ item.message_sender }}</td>
+                    <td>{{ item.message_target }}</td>
+                    <td>{{ item.message_text }}</td>
+                     -->
+                    <td>{{ item }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+            &nbsp
+            <!-- <form method="GET" action="{% url 'home' %}"> -->
+            <form method="POST" action="{% url 'home' %}">   
+                {% csrf_token %}
+                <button type="submit">Back</button>
+            </form>
+    </body>
+</html>

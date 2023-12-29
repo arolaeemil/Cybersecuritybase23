@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Test_thing</title>
+    </head>
+
+
+    <body>
+		<h1>Test chat project</h1>
+
+        <table>
+		<tr>
+		<th style="text-align:left">Username: <td>{{user.username}} 
+		</table>
+
+
+        <form action='logout/' method="POST">
+			{% csrf_token %}
+            <input type="submit" value="Logout"/>
+        </form>
+
+        <h2>Go to submit to text wall</h2>
+        <!-- <form method="GET" action="{% url 'submit_text' %}"> -->
+        <form method="POST" action="{% url 'submit_text' %}">
+            {% csrf_token %}
+            {{ form.text_data.label_tag }}
+            {{ form.text_data }}
+            <button type="submit">Go</button>
+        </form>
+
+        <h2>Go to send private message</h2>
+        <!-- <form method="GET" action = "{% url 'send_message' %}"> -->
+        <form method="POST" action = "{% url 'send_message' %}">
+            {% csrf_token %}
+            {{ form.text_data.label_tag }}
+            {{ form.text_data }}
+            <button type="submit">Go</button>
+         </form>
+
+        <h2>Text wall</h2>
+        <table>
+            {% for item in text_items %}
+            <tr>
+                <td>{{ item.username }}: {{ item.text_data }}</td>
+                <td>
+                    <!-- <form method="GET" action="{% url 'delete_text2' %}"> -->
+                    <form method="POST" action="{% url 'delete_text2' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ item.id }}" />
+                        
+                        {% if current_user.username == item.username %}
+                            <button class="deleteButton" type="submit">Delete Text</button>
+                        {% endif %}
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Retrieved personal messages</h2>
+        <table>
+        {% for item in message_items %}
+            <tr>
+                <td> From: {{ item.message_sender }}</td>
+                <td> | Text: {{ item.message_text }}</td>
+                <td>
+                    <!-- <form method="GET" action="{% url 'delete_message' %}"> -->
+                    <form method="POST" action="{% url 'delete_message' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ item.id }}" />
+                        <button type="submit">Delete Message</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+
+        <!-- Admin-only button -->
+        <h2 id="adminText"> Go to users (ADMIN ONLY)</h2>
+         <!-- <form method="GET" action="{% url 'show_users' %}"> -->
+        <form method="POST" action="{% url 'show_users' %}">
+            {% csrf_token %}
+            {{ form.text_data.label_tag }}
+            {{ form.text_data }}
+            <button id="adminButton" class="admin-button" type="submit" data-username="{{ user.username }}">Go</button>
+        </form>
+
+        <!-- script for hiding admin button when needed -->
+        <script>
+            var username = document.getElementById("adminButton").getAttribute("data-username");
+            var adminUsernames = ['admin'];
+            var isAdmin = adminUsernames.includes(username);
+
+            if (!isAdmin) {
+                var adminButton = document.getElementById("adminButton");
+                adminButton.style.display = "none";
+                var adminText = document.getElementById("adminText");
+                adminText.style.display = "none";
+            }
+
+        </script>
+
+        <h2>Retrieve messages from specific sender</h2>
+        <!-- <form action='getmessages/' method="GET"> -->
+        <form action='getmessages/' method="POST">
+			{% csrf_token %}
+            <input type="submit" value="Go"/>
+        </form>
+
+        <h2>Fill personal information</h2>
+        <!-- <form action='personalinfo/' method="GET"> -->
+        <form action='personalinfo/' method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Go"/>
+        </form>
+
+        <h2>Change password</h2>
+        <!--<form action="{% url 'pw_change' %}" method="GET"> -->
+        <form action="{% url 'pw_change' %}" method="POST">
+			{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Go"/>
+        </form>
+        
+    </body>
+</html>

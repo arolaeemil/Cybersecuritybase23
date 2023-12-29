@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Submit Text</title>
+    </head>
+    <body>
+        <h2>Update personal information</h2>
+        <form action="{% url 'personal_info' %}" method="GET">
+        <!-- <form action="{% url 'personal_info' %}" method="POST"> -->
+			{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Update"/>
+        </form>
+
+        <h2>Personal information: </h2>
+        <table>
+        {% for item in personal_info %}
+            <tr>
+                <td><h3>Full name: </h3>{{ item.full_name }}</td>
+                </tr><tr>
+                <td><h3>Birthday:  </h3>{{ item.birthday }}</td></tr>
+                <tr><td><h3>Phone number: </h3>{{ item.phonenumber }}</td>
+                </tr><tr>
+                <td><h3>Address:  </h3>{{ item.address }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+        &nbsp
+        <!-- <form method="GET" action="{% url 'home' %}">  -->
+        <form method="POST" action="{% url 'home' %}">   
+            {% csrf_token %}
+            <button type="submit">Back</button>
+        </form>
+    </body>
+</html>
